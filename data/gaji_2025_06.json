@@ -1,0 +1,16 @@
+[
+    {
+        "NIK": "001",
+        "Nama": "FONI",
+        "Jabatan": "Karyawan",
+        "GajiPokok": 875000,
+        "Komisi": 205295,
+        "Lembur": 30000,
+        "Bonus": 0,
+        "Absensi": 0,
+        "BPJS": 30000,
+        "TunjanganJabatan": 0,
+        "PenaltyAbsensi": 0,
+        "TOTAL": 1140295
+    }
+]

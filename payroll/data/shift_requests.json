@@ -1,0 +1,47 @@
+[
+    {
+        "id": "SR690c90bda20e3",
+        "requester": "006",
+        "partner": "025",
+        "date": "2025-11-07",
+        "status": "APPROVED",
+        "created_at": "2025-11-06T19:12:45+07:00",
+        "approved_at": "2025-11-06T20:21:56+07:00"
+    },
+    {
+        "id": "SR69147377d4ead",
+        "requester": "014",
+        "partner": "203",
+        "date": "2025-11-13",
+        "status": "APPROVED",
+        "created_at": "2025-11-12T18:45:59+07:00",
+        "approved_at": "2025-11-12T18:47:49+07:00"
+    },
+    {
+        "id": "SR69154c77a4ce5",
+        "requester": "203",
+        "partner": "014",
+        "date": "2025-11-14",
+        "status": "APPROVED",
+        "created_at": "2025-11-13T10:11:51+07:00",
+        "approved_at": "2025-11-13T14:42:04+07:00"
+    },
+    {
+        "id": "SR6930e6b4abfdd",
+        "requester": "010",
+        "partner": "001",
+        "date": "2025-12-04",
+        "status": "APPROVED",
+        "created_at": "2025-12-04T08:41:08+07:00",
+        "approved_at": "2025-12-04T09:22:31+07:00"
+    },
+    {
+        "id": "SR69397f37ee20c",
+        "requester": "019",
+        "partner": "125",
+        "date": "2025-12-11",
+        "status": "APPROVED",
+        "created_at": "2025-12-10T21:09:59+07:00",
+        "approved_at": "2025-12-13T17:31:54+07:00"
+    }
+]

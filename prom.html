@@ -1,0 +1,115 @@
+from pathlib import Path
+
+html_code = """
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <link rel="stylesheet" href="assets/css/ui.css">
+    <script defer src="assets/js/ui.js"></script>
+  <meta charset="UTF-8">
+  <title>AI Fashion Prompt Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 30px; background: #f9f9f9; }
+    #drop-area {
+      border: 2px dashed #aaa;
+      border-radius: 10px;
+      padding: 40px;
+      text-align: center;
+      background: white;
+    }
+    #drop-area.hover { border-color: #333; }
+    #preview { max-width: 250px; margin-top: 20px; }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-top: 20px;
+      padding: 10px;
+      font-family: monospace;
+    }
+    button.copy-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🎨 AI Fashion Prompt Generator</h2>
+
+<div id="drop-area">
+  <p><strong>Drag & drop</strong> gambar produk ke sini</p>
+  <input type="file" id="fileElem" accept="image/*" style="display:none">
+  <button onclick="document.getElementById('fileElem').click()">Pilih Gambar</button>
+  <br/>
+  <img id="preview" />
+</div>
+
+<textarea id="prompt" placeholder="Prompt akan muncul di sini..."></textarea>
+<button class="copy-btn" onclick="copyPrompt()">Copy Prompt</button>
+
+<script>
+  const dropArea = document.getElementById("drop-area");
+  const fileElem = document.getElementById("fileElem");
+  const preview = document.getElementById("preview");
+  const promptBox = document.getElementById("prompt");
+
+  function generatePrompt(filename) {
+    return `Buatkan foto katalog fashion profesional. Model wanita usia 20–30 tahun memakai produk yang ada di gambar: ${filename}.
+Jangan ubah bentuk, warna, tekstur, atau detail seperti kancing, pola rajut, dan potongan.
+
+Warna baju harus 100% sama dengan gambar asli — jaga akurasi warna.
+
+Gaya foto seperti katalog Lois Jeans atau Cardinal — clean, elegan, latar putih netral, pencahayaan lembut.
+
+Model berpose natural, mengenakan celana putih atau beige. Fokus pada pakaian. Jangan tingkatkan atau koreksi warna otomatis.`;
+  }
+
+  function handleFiles(files) {
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+      promptBox.value = generatePrompt(file.name);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function copyPrompt() {
+    promptBox.select();
+    document.execCommand("copy");
+    alert("✅ Prompt berhasil disalin!");
+  }
+
+  dropArea.addEventListener("drop", e => {
+    e.preventDefault();
+    handleFiles(e.dataTransfer.files);
+    dropArea.classList.remove("hover");
+  });
+
+  dropArea.addEventListener("dragover", e => {
+    e.preventDefault();
+    dropArea.classList.add("hover");
+  });
+
+  dropArea.addEventListener("dragleave", () => {
+    dropArea.classList.remove("hover");
+  });
+
+  fileElem.addEventListener("change", () => {
+    handleFiles(fileElem.files);
+  });
+</script>
+
+</body>
+</html>
+"""
+
+output_path = Path("/mnt/data/ai-fashion-prompt-generator.html")
+output_path.write_text(html_code)
+
+output_path.name

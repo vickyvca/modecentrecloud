@@ -1,0 +1,58 @@
+    <main class="main">
+        <?php if ($session_message): ?><div class="success-bar"><?= htmlspecialchars($session_message) ?></div><?php endif; ?>
+        <?php if ($is_prev_data_missing): ?><div class="warning-bar">⚠️ Data payroll bulan lalu (<?=$ym_prev?>) kosong. Gaji Pokok & Tunjangan tidak terisi otomatis.</div><?php endif; ?>
+        
+        <section class="card">
+            <p class="note">
+                <strong>Aturan Perhitungan Bonus:</strong><br>
+                - <strong>Bonus Kehadiran:</strong> 0 hari absen = Rp 50.000, 1 hari absen = Rp 25.000, 2+ hari = Rp 0.<br>
+                - <strong>Bonus Lembur (OT):</strong> Rp <?= fmt_idr(5000) ?> per kejadian (mengikuti OVERTIME_BONUS_FLAG pada absensi).
+            </p>
+        </section>
+
+        <section class="card" style="overflow-x: auto;">
+            <form method="post">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nama</th><th>Jabatan</th><th>Gaji Pokok</th>
+                            <th class="right">Komisi</th>
+                            <th class="right">Bonus Penjualan</th>
+                            <th class="center">Absen Disetujui</th>
+                            <th class="right">Bonus Kehadiran</th>
+                            <th class="center">Hari OT</th>
+                            <th class="right">Bonus Lembur</th>
+                            <th>Tunj. Jabatan</th><th>Tunj. BPJS</th>
+                            <th>Potongan</th><th class="right">TOTAL</th><th>Catatan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($payroll['items'] as $it): $nik=$it['nik']; ?>
+                        <tr>
+                            <td><?=htmlspecialchars($it['nama'])?><br><small style="color:var(--text-muted)"><?=$nik?></small></td>
+                            <td><input class="input" type="text" name="jabatan[<?=$nik?>]" value="<?=htmlspecialchars($it['jabatan'])?>"></td>
+                            <td><input class="input" type="number" name="gapok[<?=$nik?>]" value="<?=$it['gapok']?>"></td>
+                            <td class="right"><?=fmt_idr($it['komisi'])?></td>
+                            <td class="right"><?=fmt_idr($it['bonus'])?></td>
+                            <td class="center"><b><?=$it['absen_disetujui_days']?></b></td>
+                            <td class="right"><b><?=fmt_idr($it['bonus_absensi'])?></b></td>
+                            <td class="center"><b><?=$it['absen_ot_days']?></b></td>
+                            <td class="right"><b><?=fmt_idr($it['lembur'])?></b></td>
+                            <td><input class="input" type="number" name="tunj_jabatan[<?=$nik?>]" value="<?=$it['tunj_jabatan']?>"></td>
+                            <td><input class="input" type="number" name="tunj_bpjs[<?=$nik?>]" value="<?=$it['tunj_bpjs']?>"></td>
+                            <td><input class="input" type="number" name="potongan[<?=$nik?>]" value="<?=$it['potongan']?>"></td>
+                            <td class="right" style="font-weight:bold; color:var(--green);"><?=fmt_idr($it['total'])?></td>
+                            <td><input class="input" type="text" name="catatan[<?=$nik?>]" value="<?=htmlspecialchars($it['catatan'])?>"></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="actions-bar">
+                    <button class="btn" type="submit" style="background:var(--green); color:black;"><i class="fa-solid fa-save"></i> Simpan Perubahan</button>
+                    <div>
+                        <a href="?bulan=<?=$ym?>&action=force_recalc" class="btn" onclick="return confirm('Ambil ulang data absensi & penjualan dari database? Ini akan menimpa bonus yang ada.')"><i class="fa-solid fa-sync"></i> Hitung Ulang Bonus</a>
+                        <a href="?bulan=<?=$ym?>&action=delete_payroll" class="btn" style="background:var(--red); color:white;" onclick="return confirm('YAKIN menghapus data payroll bulan <?=$ym?>? Semua input manual akan hilang.')"><i class="fa-solid fa-trash"></i> Hapus Payroll Ini</a>
+                    </div>
+                </div>
+            </form>
+        </section>
